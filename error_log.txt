@@ -1,0 +1,16 @@
+2024-07-13 16:08:56.885795 - Error en importar_a_mysql: objeto 'summary_stats' no encontrado
+2024-07-13 16:15:33.658823 - Error en guardar_en_mysql: input string 147 is invalid
+2024-07-13 16:15:33.66108 - Error en importar_a_mysql: Error en guardar_en_mysql. Revisa el log para más detalles.
+2024-07-13 16:18:20.885341 - Error en guardar_en_mysql: input string 147 is invalid
+2024-07-13 16:18:20.887439 - Error en importar_a_mysql: Error en guardar_en_mysql. Revisa el log para más detalles.
+2024-07-13 16:21:25.644126 - Error en guardar_en_mysql: input string 147 is invalid
+2024-07-13 16:21:25.646364 - Error en importar_a_mysql: Error en guardar_en_mysql. Revisa el log para más detalles.
+2024-07-13 16:24:15.233142 - Error en guardar_en_mysql: input string 147 is invalid
+2024-07-13 16:24:15.23601 - Error en importar_a_mysql: Error en guardar_en_mysql. Revisa el log para más detalles.
+2024-07-13 20:47:38.088229 - Error en importar_a_mysql: no se pudo encontrar la función "crear_resumen_estadisticas"
+2024-07-13 20:47:47.780879 - Error en importar_a_mysql: no se pudo encontrar la función "crear_resumen_estadisticas"
+2024-07-13 22:21:49.160882 - Error en guardar_en_mysql: internal error in RS_DBI_getConnection: corrupt connection handle
+2024-07-13 22:21:49.163825 - Error en importar_a_mysql: Error en guardar_en_mysql. Revisa el log para más detalles.
+2024-07-13 22:22:25.655602 - Error en guardar_en_mysql: internal error in RS_DBI_getConnection: corrupt connection handle
+2024-07-13 22:22:25.658561 - Error en importar_a_mysql: Error en guardar_en_mysql. Revisa el log para más detalles.
+2024-07-14 00:38:13.962586 - Error en normalizar_nombres_columnas: `clean_names()` requires that either names or dimnames be non-null.
