@@ -14,7 +14,7 @@ Este proyecto tiene como objetivo automatizar el proceso de importación, limpie
 - Guardado de datos en una tabla MySQL.
 - Generación de un resumen de estadísticas.
 - Manejo de errores.
-- Pruebas unitarias exhaustivas con librería TESTHAT.
+- Pruebas unitarias con librería TESTHAT.
 
 ### Relación entre Archivos
 
