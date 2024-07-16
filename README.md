@@ -18,13 +18,20 @@ Este proyecto tiene como objetivo automatizar el proceso de importación, limpie
 ```mermaid
 graph TD;
     A[Inicio] --> B[Leer Archivo CSV];
-    B --> C[Normalizar Nombres de Columnas];
-    C --> D[Normalizar Columnas];
-    D --> E[Manejar Valores NA];
-    E --> F[Eliminar Filas Duplicadas];
-    F --> G[Guardar en MySQL];
-    G --> H[Crear Resumen de Estadísticas];
-    H --> I[Fin];
+    B --> |Archivo existe| C[Normalizar Nombres de Columnas];
+    B --> |Error: Archivo no encontrado| D[Escribir en Log de Errores];
+    C --> E[Normalizar Columnas];
+    E --> F[Manejar Valores NA];
+    F --> G[Eliminar Filas Duplicadas];
+    G --> H[Guardar en MySQL];
+    H --> I[Crear Resumen de Estadísticas];
+    I --> J[Fin];
+    D --> J[Fin];
+    C --> |Error: Normalización Fallida| D
+    E --> |Error: Normalización Fallida| D
+    F --> |Error: Manejo de NA Fallido| D
+    G --> |Error: Eliminación de Duplicados Fallida| D
+    H --> |Error: Guardar en MySQL Fallido| D
 ```
 
 
