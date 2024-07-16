@@ -25,6 +25,7 @@ graph TD;
     F --> G[Guardar en MySQL];
     G --> H[Crear Resumen de Estadísticas];
     H --> I[Fin];
+```
 
 
 Este es un video explicativo de mi proyecto:
