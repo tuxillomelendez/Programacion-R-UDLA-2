@@ -13,6 +13,20 @@ Este proyecto tiene como objetivo automatizar el proceso de importación, limpie
 - Manejo de errores.
 - Pruebas unitarias exhaustivas con librería TESTHAT.
 
+## Diagrama de Flujo de la Función importar_a_mysql
+
+```mermaid
+graph TD;
+    A[Inicio] --> B[Leer Archivo CSV];
+    B --> C[Normalizar Nombres de Columnas];
+    C --> D[Normalizar Columnas];
+    D --> E[Manejar Valores NA];
+    E --> F[Eliminar Filas Duplicadas];
+    F --> G[Guardar en MySQL];
+    G --> H[Crear Resumen de Estadísticas];
+    H --> I[Fin];
+
+
 Este es un video explicativo de mi proyecto:
 
 [![Catedra Final Programacion R - UDLA](https://img.youtube.com/vi/hrbf_opnc1Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=hrbf_opnc1Q)
