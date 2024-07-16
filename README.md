@@ -63,6 +63,7 @@ graph TD;
 Este es un video explicativo de mi proyecto:
 
 [![Catedra Final Programacion R - UDLA](https://img.youtube.com/vi/hrbf_opnc1Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=hrbf_opnc1Q)
+Se recomienda ver en calidad alta (HD -1080p-)
 
 En este video, cubro los siguientes puntos:
 1. Introducción al proyecto.
@@ -70,6 +71,14 @@ En este video, cubro los siguientes puntos:
 3. Resultados y conclusiones.
 
 ## Uso
+Se debe tener instalado Mysql con al menos una base de datos creada. Se debe además configurar el motor con la siguiente opcion:
+```sql
+-- Habilitar local_infile globalmente
+SET GLOBAL local_infile = 1;
+
+-- Verificar que la configuración se ha aplicado
+SHOW VARIABLES LIKE 'local_infile';
+```
 
 ### Requisitos
 
@@ -89,16 +98,6 @@ En este video, cubro los siguientes puntos:
 #
 #              Este código es libre para su uso por cualquier persona.
 #====================================================================================================================================
-
-# -------------------------------------------------------
-# Importante habilitar en mysql:
-#
-# -- Habilitar local_infile globalmente
-# SET GLOBAL local_infile = 1;
-#
-# -- Verificar que la configuración se ha aplicado
-# SHOW VARIABLES LIKE 'local_infile';
-# -------------------------------------------------------
 
 setwd("C:/Users/jorge/OneDrive/MAGISTER/01/PROGRAMACION EN R/EVALUACIONES/02 - FUNCION_MEDIA")
 
@@ -444,6 +443,8 @@ test_that("Importar a MySQL funciona correctamente", {
 ```
 ## Conclusión
 
-Este proyecto ha sido una valiosa oportunidad para aplicar y consolidar mis conocimientos en programación con R y en el manejo de bases de datos MySQL. A través de este trabajo, he podido automatizar la importación y limpieza de datos, así como realizar análisis de datos de manera eficiente.
+Este proyecto ha sido una valiosa oportunidad para aplicar y consolidar mis conocimientos en programación con R y en el manejo de bases de datos MySQL. A través de este trabajo, he podido automatizar la importación y limpieza de datos, así como realizar análisis de datos de manera eficiente, tema que es bastante recurrente en el trabajo diario.
+
+La incorporación de R como herramienta de analisis en lo laboral ha sido un acierto y una ventaja competitiva que ya estoy diseminando en mi propio equipo de trabajo.
 
 Quisiera agradecer a la Universidad y a mis profesores por su guía y apoyo durante todo el curso, tambien a mis compañeros de clase por la disposición a compartir conocimientos. Este proyecto ha sido un reto enriquecedor y una experiencia de aprendizaje fundamental en mi camino hacia el grado de Magister en Data Science.
