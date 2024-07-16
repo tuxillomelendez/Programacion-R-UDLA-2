@@ -13,6 +13,33 @@ Este proyecto tiene como objetivo automatizar el proceso de importación, limpie
 - Manejo de errores.
 - Pruebas unitarias exhaustivas con librería TESTHAT.
 
+## Relación entre Archivos
+
+### Descripción de la Relación entre Archivos
+* importa_dataset_to_mysql.R: Este archivo es el script principal que se utiliza para importar los datos a MySQL. Llama a las funciones definidas en fx_dataset_to_mysql.R.
+* fx_dataset_to_mysql.R: Contiene todas las funciones necesarias para realizar la importación y limpieza de datos, así como la gestión de la conexión a MySQL y la creación del resumen de estadísticas.
+* test_importar_a_mysql.R: Contiene pruebas unitarias para las funciones definidas en fx_dataset_to_mysql.R, asegurando que cada función se comporta como se espera.
+* error_log.txt: Este archivo registra los errores que ocurren durante la ejecución del script importa_dataset_to_mysql.R, permitiendo la depuración y el análisis de fallos.
+
+El siguiente diagrama muestra cómo los archivos importa_dataset_to_mysql.R y test_importar_a_mysql.R interactúan con fx_dataset_to_mysql.R, que contiene las funciones definidas. Además, error_log.txt está relacionado con las funciones de manejo de errores en los otros scripts.
+
+```mermaid
+graph TD;
+    A[importa_dataset_to_mysql.R] --> B(fx_dataset_to_mysql.R);
+    B --> C[leer_data_set];
+    B --> D[normalizar_nombres_columnas];
+    B --> E[normalizar_columnas];
+    B --> F[manejar_na];
+    B --> G[eliminar_filas_duplicadas];
+    B --> H[guardar_en_mysql];
+    B --> I[crear_resumen_estadisticas];
+    A --> J[test_importar_a_mysql.R];
+    A --> K[error_log.txt];
+    J --> B;
+    K --> A;
+    K --> B;
+```
+
 ## Diagrama de Flujo de la Función importar_a_mysql
 
 ```mermaid
@@ -33,25 +60,6 @@ graph TD;
     G --> |Error: Eliminación de Duplicados Fallida| D
     H --> |Error: Guardar en MySQL Fallido| D
 ```
-## Relación entre Archivos
-
-```mermaid
-graph TD;
-    A[importa_dataset_to_mysql.R] --> B(fx_dataset_to_mysql.R);
-    B --> C[leer_data_set];
-    B --> D[normalizar_nombres_columnas];
-    B --> E[normalizar_columnas];
-    B --> F[manejar_na];
-    B --> G[eliminar_filas_duplicadas];
-    B --> H[guardar_en_mysql];
-    B --> I[crear_resumen_estadisticas];
-    A --> J[test_importar_a_mysql.R];
-    A --> K[error_log.txt];
-    J --> B;
-    K --> A;
-    K --> B;
-```
-
 Este es un video explicativo de mi proyecto:
 
 [![Catedra Final Programacion R - UDLA](https://img.youtube.com/vi/hrbf_opnc1Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=hrbf_opnc1Q)
