@@ -1,4 +1,5 @@
-![Logo UDLA](https://www.udla.cl/wp-content/themes/udla/img/logo-udla.svg)
+![Logo UDLA](https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo-udla.jpg)
+# INFORME CATEDRA NUMERO 2 PROGRAMACION EN R
 
 # Proyecto de Importación de Datos a MySQL usando R
 
