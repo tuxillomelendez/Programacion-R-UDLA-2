@@ -1,11 +1,11 @@
 ![Logo UDLA](https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo-udla.jpg)
 # INFORME CATEDRA NUMERO 2 PROGRAMACION EN R
 
-# Proyecto de Importación de Datos a MySQL usando R
+## Proyecto de Importación de Datos a MySQL usando R
 
 Este proyecto tiene como objetivo automatizar el proceso de importación, limpieza y procesamiento de datos desde un archivo CSV a una base de datos MySQL utilizando R. El proyecto fue desarrollado como parte de la cátedra final del curso Programación en R, conducente al grado de Magister en Data Science.
 
-## Funcionalidades
+### Funcionalidades
 
 - Lectura de datos desde un archivo CSV.
 - Normalización de nombres de columnas y valores.
@@ -16,9 +16,9 @@ Este proyecto tiene como objetivo automatizar el proceso de importación, limpie
 - Manejo de errores.
 - Pruebas unitarias exhaustivas con librería TESTHAT.
 
-## Relación entre Archivos
+### Relación entre Archivos
 
-### Descripción de la Relación entre Archivos
+#### Descripción de la Relación entre Archivos
 * importa_dataset_to_mysql.R: Este archivo es el script principal que se utiliza para importar los datos a MySQL. Llama a las funciones definidas en fx_dataset_to_mysql.R.
 * fx_dataset_to_mysql.R: Contiene todas las funciones necesarias para realizar la importación y limpieza de datos, así como la gestión de la conexión a MySQL y la creación del resumen de estadísticas.
 * test_importar_a_mysql.R: Contiene pruebas unitarias para las funciones definidas en fx_dataset_to_mysql.R, asegurando que cada función se comporta como se espera.
@@ -43,7 +43,7 @@ graph TD;
     K --> B;
 ```
 
-## Diagrama de Flujo de la Función importar_a_mysql
+### Diagrama de Flujo de la Función importar_a_mysql
 
 ```mermaid
 graph TD;
@@ -73,7 +73,7 @@ En este video, cubro los siguientes puntos:
 2. Explicación del código.
 3. Resultados y conclusiones.
 
-## Uso
+### Uso
 Se debe tener instalado Mysql con al menos una base de datos creada. Se debe además configurar el motor con la siguiente opcion:
 ```sql
 -- Habilitar local_infile globalmente
@@ -83,14 +83,18 @@ SET GLOBAL local_infile = 1;
 SHOW VARIABLES LIKE 'local_infile';
 ```
 
-### Requisitos
+#### Requisitos
 
 - R
 - Paquetes: `DBI`, `RMySQL`, `dplyr`, `broom`, `janitor`, `rio`, `stringi`, `testthat`
-# Archivos Fuentes
+- Motor MySql instalado y configurado. La version donde se hicieron las pruebas es la "8.0.37" y DBeaver 24.1.2 para gestionar las bases de datos.
+  
+## Archivos Fuentes
 
-## 1. importa_dataset_to_mysql.R
-### Ejecución del Código
+A continuación el código fuente de cada uno de los archivos que interactuan en la solución.
+
+### 1. importa_dataset_to_mysql.R
+#### Ejecución del Código
 ```r
 #====================================================================================================================================
 # Autor:       Jorge Melendez Bastias.
@@ -140,8 +144,8 @@ dbDisconnect(con)
 print(result$summary_stats)
 ```
 
-## 2. fx_dataset_to_mysql.R
-### Ejecución del Código
+### 2. fx_dataset_to_mysql.R
+#### Ejecución del Código
 ```r
 #====================================================================================================================================
 # Autor:       Jorge Melendez Bastias.
@@ -364,8 +368,8 @@ DataResult <- function(data, summary_stats) {
 }
 ```
 
-## 3. test_importar_a_mysql.R
-### Ejecución del Código
+### 3. test_importar_a_mysql.R
+#### Ejecución del Código
 ```r
 #====================================================================================================================================
 # Autor:       Jorge Melendez Bastias.
