@@ -1,3 +1,5 @@
+![Logo UDLA](https://www.udla.cl/wp-content/themes/udla/img/logo-udla.svg)
+
 # Proyecto de Importación de Datos a MySQL usando R
 
 Este proyecto tiene como objetivo automatizar el proceso de importación, limpieza y procesamiento de datos desde un archivo CSV a una base de datos MySQL utilizando R. El proyecto fue desarrollado como parte de la cátedra final del curso Programación en R, conducente al grado de Magister en Data Science.
