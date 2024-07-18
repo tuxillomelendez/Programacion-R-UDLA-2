@@ -106,6 +106,16 @@ A continuación el código fuente de cada uno de los archivos que interactuan en
 #              Este código es libre para su uso por cualquier persona.
 #====================================================================================================================================
 
+# -------------------------------------------------------
+# Importante habilitar en mysql:
+#
+# -- Habilitar local_infile globalmente
+# SET GLOBAL local_infile = 1;
+#
+# -- Verificar que la configuración se ha aplicado
+# SHOW VARIABLES LIKE 'local_infile';
+# -------------------------------------------------------
+
 setwd("C:/Users/jorge/OneDrive/MAGISTER/01/PROGRAMACION EN R/EVALUACIONES/02 - FUNCION_MEDIA")
 
 # Funciones Jorge Melendez
@@ -131,7 +141,7 @@ con <- dbConnect(RMySQL::MySQL(),
 # - metodo_na: Método para manejar los NA ("eliminar" o "media", por defecto "eliminar").
 # - encoding: Codificación del archivo de datos (por defecto "UTF-8").
 result <- importar_a_mysql(file_path = "Most Streamed Spotify Songs 2024.csv",
-                           table_name = "spotify_2",
+                           table_name = "spotify_5",
                            db_con = con,
                            metodo_na = "media",
                            encoding = "UTF-8")
@@ -161,16 +171,14 @@ print(result$summary_stats)
 # Librerías necesarias
 library(DBI)       # Para conectar y ejecutar consultas en bases de datos
 library(RMySQL)    # Para conectar y manejar bases de datos MySQL
-library(dplyr)     # Para manipulación de datos
-library(ggplot2)   # Para visualización de datos
-library(broom)     # Para convertir modelos en dataframes ordenados
 library(janitor)   # Para limpiar y normalizar nombres de columnas
 library(rio)       # Para importar y exportar datos en diversos formatos
 library(stringi)   # Para manipulación y limpieza de cadenas de texto
 
 #' Escribir en el log de errores
 #'
-#' Registra un mensaje de error con un timestamp en el archivo 'error_log.txt'.
+#' Objetivo: Registra un mensaje de error con un timestamp en el archivo 'error_log.txt'.
+#' Librerías necesarias: - base R: Utiliza funciones de la base de R para escribir mensajes de error en un archivo de log.
 #'
 #' @param mensaje Un string con el mensaje de error a registrar.
 escribir_log <- function(mensaje) {
@@ -181,7 +189,8 @@ escribir_log <- function(mensaje) {
 
 #' Leer dataset
 #'
-#' Importa datos desde un archivo especificado y maneja cualquier error que ocurra.
+#' Objetivo: Importa datos desde un archivo especificado y maneja cualquier error que ocurra.
+#' Librerías necesarias: - rio: Proporciona una interfaz simple para importar y exportar datos en diversos formatos.
 #'
 #' @param file_path Ruta al archivo de datos.
 #' @param encoding Codificación del archivo de datos (por defecto "UTF-8").
@@ -199,7 +208,8 @@ leer_data_set <- function(file_path,
 
 #' Normalizar nombres de columnas
 #'
-#' Limpia y normaliza los nombres de las columnas del dataframe.
+#' Objetivo: Limpia y normaliza los nombres de las columnas del dataframe.
+#' Librerías necesarias: - janitor: Limpia y normaliza los nombres de las columnas del dataframe.
 #'
 #' @param data El dataframe cuyas columnas se normalizarán.
 #' @return El dataframe con los nombres de las columnas normalizados.
@@ -215,7 +225,8 @@ normalizar_nombres_columnas <- function(data) {
 
 #' Normalizar columnas
 #'
-#' Normaliza las columnas numéricas del dataframe.
+#' Objetivo: Normaliza las columnas numéricas del dataframe.
+#' Librerías necesarias: - base R: Utiliza funciones de la base de R para identificar y escalar columnas numéricas.
 #'
 #' @param data El dataframe cuyas columnas se normalizarán.
 #' @return El dataframe con las columnas normalizadas.
@@ -232,7 +243,8 @@ normalizar_columnas <- function(data) {
 
 #' Manejar valores NA
 #'
-#' Maneja los valores NA en el dataframe, eliminándolos o reemplazándolos por la media de la columna.
+#' Objetivo: Maneja los valores NA en el dataframe, eliminándolos o reemplazándolos por la media de la columna.
+#' Librerías necesarias: - base R: Utiliza funciones de la base de R para manejar valores NA mediante eliminación o imputación.
 #'
 #' @param data El dataframe en el cual se manejarán los valores NA.
 #' @param metodo Método para manejar los NA ("eliminar" o "media", por defecto "eliminar").
@@ -258,7 +270,8 @@ manejar_na <- function(data,
 
 #' Eliminar filas duplicadas
 #'
-#' Elimina las filas duplicadas del dataframe.
+#' Objetivo: Elimina las filas duplicadas del dataframe.
+#' Librerías necesarias: - base R: Utiliza funciones de la base de R para identificar y eliminar filas duplicadas.
 #'
 #' @param data El dataframe del cual se eliminarán las filas duplicadas.
 #' @return El dataframe sin filas duplicadas.
@@ -274,7 +287,9 @@ eliminar_filas_duplicadas <- function(data) {
 
 #' Guardar dataset en MySQL
 #'
-#' Guarda el dataframe en una tabla de MySQL.
+#' Objetivo: Guarda el dataframe en una tabla de MySQL.
+#' Librerías necesarias: - DBI: Proporciona una interfaz para la conexión y ejecución de consultas en bases de datos.
+#'                       - RMySQL: Maneja la conexión y manipulación de bases de datos MySQL.
 #'
 #' @param data El dataframe a guardar.
 #' @param table_name Nombre de la tabla en MySQL donde se guardará el dataframe.
@@ -283,7 +298,12 @@ guardar_en_mysql <- function(data,
                              table_name,
                              db_con) {
   tryCatch({
-    dbWriteTable(db_con, table_name, data, overwrite = TRUE, append = FALSE, row.names = FALSE)
+    dbWriteTable(db_con,
+                 table_name,
+                 data,
+                 overwrite = TRUE,
+                 append = FALSE,
+                 row.names = FALSE)
   }, error = function(e) {
     escribir_log(paste("Error en guardar_en_mysql:", e$message))
     stop("Error en guardar_en_mysql. Revisa el log para más detalles.")
@@ -292,7 +312,8 @@ guardar_en_mysql <- function(data,
 
 #' Crear resumen de estadísticas
 #'
-#' Crea un resumen de estadísticas del dataframe.
+#' Objetivo: Crea un resumen de estadísticas del dataframe.
+#' Librerías necesarias: - base R: Utiliza funciones de la base de R para calcular estadísticas descriptivas del dataframe.
 #'
 #' @param data El dataframe del cual se creará el resumen de estadísticas.
 #' @return Una lista con el resumen de estadísticas del dataframe.
@@ -307,7 +328,9 @@ crear_resumen_estadisticas <- function(data) {
 
 #' Importar datos a MySQL
 #'
-#' Realiza todas las etapas necesarias para importar un archivo a MySQL.
+#' Objetivo: Realiza todas las etapas necesarias para importar un archivo a MySQL.
+#' Librerías necesarias: - rio, janitor, DBI, RMySQL, stringi: Integra todas las funciones anteriores para importar, limpiar,
+#'                         normalizar, manejar NA, eliminar duplicados, y guardar datos en MySQL.
 #'
 #' @param file_path Ruta al archivo de datos.
 #' @param table_name Nombre de la tabla en MySQL donde se guardará el dataframe.
@@ -379,6 +402,8 @@ DataResult <- function(data, summary_stats) {
 #              Utiliza el paquete `testthat` para verificar que la función se comporta como se espera.
 #              Las pruebas incluyen la validación de la estructura del objeto retornado y la correcta manipulación y almacenamiento
 #              de datos en una base de datos MySQL.
+# Librería:    testthat, que proporciona un marco para realizar pruebas unitarias y asegurar que las funciones se comporten
+#              como se espera.
 #
 #              Este código es libre para su uso por cualquier persona.
 #====================================================================================================================================
