@@ -1,8 +1,11 @@
-# Proyecto de Importación de Datos a MySQL usando R
+![Logo UDLA](https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo-udla.jpg)
+# INFORME CATEDRA NUMERO 2 PROGRAMACION EN R
+
+## Proyecto de Importación de Datos a MySQL usando R
 
 Este proyecto tiene como objetivo automatizar el proceso de importación, limpieza y procesamiento de datos desde un archivo CSV a una base de datos MySQL utilizando R. El proyecto fue desarrollado como parte de la cátedra final del curso Programación en R, conducente al grado de Magister en Data Science.
 
-## Funcionalidades
+### Funcionalidades
 
 - Lectura de datos desde un archivo CSV.
 - Normalización de nombres de columnas y valores.
@@ -11,28 +14,100 @@ Este proyecto tiene como objetivo automatizar el proceso de importación, limpie
 - Guardado de datos en una tabla MySQL.
 - Generación de un resumen de estadísticas.
 - Manejo de errores.
-- Pruebas unitarias exhaustivas con librería TESTHAT.
+- Pruebas unitarias con librería TESTHAT.
 
+### Relación entre Archivos
+
+#### Descripción de la Relación entre Archivos
+* importa_dataset_to_mysql.R: Este archivo es el script principal que se utiliza para importar los datos a MySQL. Llama a las funciones definidas en fx_dataset_to_mysql.R.
+* fx_dataset_to_mysql.R: Contiene todas las funciones necesarias para realizar la importación y limpieza de datos, así como la gestión de la conexión a MySQL y la creación del resumen de estadísticas.
+* test_importar_a_mysql.R: Contiene pruebas unitarias para las funciones definidas en fx_dataset_to_mysql.R, asegurando que cada función se comporta como se espera.
+* error_log.txt: Este archivo registra los errores que ocurren durante la ejecución del script importa_dataset_to_mysql.R, permitiendo la depuración y el análisis de fallos.
+
+El siguiente diagrama muestra cómo los archivos importa_dataset_to_mysql.R y test_importar_a_mysql.R interactúan con fx_dataset_to_mysql.R, que contiene las funciones definidas. Además, error_log.txt está relacionado con las funciones de manejo de errores en los otros scripts.
+
+```mermaid
+graph TD;
+    A[importa_dataset_to_mysql.R] --> B(fx_dataset_to_mysql.R);
+    B --> C[leer_data_set];
+    B --> D[normalizar_nombres_columnas];
+    B --> E[normalizar_columnas];
+    B --> F[manejar_na];
+    B --> G[eliminar_filas_duplicadas];
+    B --> H[guardar_en_mysql];
+    B --> I[crear_resumen_estadisticas];
+    A --> J[test_importar_a_mysql.R];
+    A --> K[error_log.txt];
+    J --> B;
+    K --> A;
+    K --> B;
+```
+
+### Diagrama de Flujo de la Función importar_a_mysql
+
+```mermaid
+graph TD;
+    A[Inicio] --> B[Leer Archivo CSV];
+    B --> |Archivo existe| C[Normalizar Nombres de Columnas];
+    B --> |Error: Archivo no encontrado| D[Escribir en Log de Errores];
+    C --> E[Normalizar Columnas];
+    E --> F[Manejar Valores NA];
+    F --> G[Eliminar Filas Duplicadas];
+    G --> H[Guardar en MySQL];
+    H --> I[Crear Resumen de Estadísticas];
+    I --> J[Fin];
+    D --> J[Fin];
+    C --> |Error: Normalización Fallida| D
+    E --> |Error: Normalización Fallida| D
+    F --> |Error: Manejo de NA Fallido| D
+    G --> |Error: Eliminación de Duplicados Fallida| D
+    H --> |Error: Guardar en MySQL Fallido| D
+```
 Este es un video explicativo de mi proyecto:
 
 [![Catedra Final Programacion R - UDLA](https://img.youtube.com/vi/hrbf_opnc1Q/maxresdefault.jpg)](https://www.youtube.com/watch?v=hrbf_opnc1Q)
+Se recomienda ver en calidad alta (HD -1080p-)
 
 En este video, cubro los siguientes puntos:
 1. Introducción al proyecto.
 2. Explicación del código.
 3. Resultados y conclusiones.
 
-## Uso
+### Uso
+Se debe tener instalado Mysql con al menos una base de datos creada. Se debe además configurar el motor con la siguiente opcion:
+```sql
+-- Habilitar local_infile globalmente
+SET GLOBAL local_infile = 1;
 
-### Requisitos
+-- Verificar que la configuración se ha aplicado
+SHOW VARIABLES LIKE 'local_infile';
+```
+
+#### Requisitos
 
 - R
 - Paquetes: `DBI`, `RMySQL`, `dplyr`, `broom`, `janitor`, `rio`, `stringi`, `testthat`
-# Archivos Fuentes
+- Motor MySql instalado y configurado. La version donde se hicieron las pruebas es la "8.0.37" y DBeaver 24.1.2 para gestionar las bases de datos.
+  
+## Archivos Fuentes
 
-## 1. importa_dataset_to_mysql.R
-### Ejecución del Código
+A continuación el código fuente de cada uno de los archivos que interactuan en la solución.
+
+### 1. importa_dataset_to_mysql.R
+#### Ejecución del Código
 ```r
+#====================================================================================================================================
+# Autor:       Jorge Melendez Bastias.
+# Motivo:      Para la cátedra final del curso Programación en R conducente a grado de Magíster en Data Science.
+# Fecha:       10-07-2024
+# Descripción: Este script se encarga de conectar a una base de datos MySQL, ejecutar la función
+#              importar_a_mysql para importar y procesar un dataset, y finalmente desconectar de la base de datos.
+#
+#              Este código es libre para su uso por cualquier persona.
+#====================================================================================================================================
+
+setwd("C:/Users/jorge/OneDrive/MAGISTER/01/PROGRAMACION EN R/EVALUACIONES/02 - FUNCION_MEDIA")
+
 # Funciones Jorge Melendez
 source("fx_dataset_to_mysql.R")
 
@@ -40,17 +115,23 @@ source("fx_dataset_to_mysql.R")
 library(DBI)       # Para conectar y ejecutar consultas en bases de datos
 library(RMySQL)    # Para conectar y manejar bases de datos MySQL
 
-# Conectar a la base de datos MySQL
-con <- DBI::dbConnect(RMySQL::MySQL(),
-                      dbname = "database name",
-                      host = "localhost",
-                      port = 3306,
-                      user = "user",
-                      password = "pass")
+# Conectar a MySQL
+con <- dbConnect(RMySQL::MySQL(),
+                 dbname = "test_function",
+                 host = "localhost",
+                 port = 3306,
+                 user = "usuario_R",
+                 password = "ConectaR")
 
 # Ejecutar la importación
+# Parámetros:
+# - file_path: Ruta al archivo de datos.
+# - table_name: Nombre de la tabla en MySQL donde se guardará el dataframe.
+# - db_con: Conexión a la base de datos MySQL.
+# - metodo_na: Método para manejar los NA ("eliminar" o "media", por defecto "eliminar").
+# - encoding: Codificación del archivo de datos (por defecto "UTF-8").
 result <- importar_a_mysql(file_path = "Most Streamed Spotify Songs 2024.csv",
-                           table_name = "spotify",
+                           table_name = "spotify_2",
                            db_con = con,
                            metodo_na = "media",
                            encoding = "UTF-8")
@@ -59,12 +140,24 @@ result <- importar_a_mysql(file_path = "Most Streamed Spotify Songs 2024.csv",
 dbDisconnect(con)
 
 # Imprimir el resumen de estadísticas
+# Muestra el resumen de estadísticas generado por la función importar_a_mysql
 print(result$summary_stats)
 ```
 
-## 2. fx_dataset_to_mysql.R
-### Ejecución del Código
+### 2. fx_dataset_to_mysql.R
+#### Ejecución del Código
 ```r
+#====================================================================================================================================
+# Autor:       Jorge Melendez Bastias.
+# Motivo:      Para la cátedra final del curso Programación en R conducente a grado de Magíster en Data Science.
+# Fecha:       10-07-2024
+# Descripción: Este script contiene funciones para importar, limpiar, procesar y guardar datos en una base de datos MySQL.
+#              Las funciones se encargan de leer un dataset, normalizar nombres de columnas, manejar valores NA, eliminar duplicados,
+#              y guardar los datos en una tabla MySQL, además de generar un resumen de estadísticas.
+#
+#              Este código es libre para su uso por cualquier persona.
+#====================================================================================================================================
+
 # Librerías necesarias
 library(DBI)       # Para conectar y ejecutar consultas en bases de datos
 library(RMySQL)    # Para conectar y manejar bases de datos MySQL
@@ -275,9 +368,21 @@ DataResult <- function(data, summary_stats) {
 }
 ```
 
-## 3. test_importar_a_mysql.R
-### Ejecución del Código
+### 3. test_importar_a_mysql.R
+#### Ejecución del Código
 ```r
+#====================================================================================================================================
+# Autor:       Jorge Melendez Bastias.
+# Motivo:      Para la cátedra final del curso Programación en R conducente a grado de Magíster en Data Science.
+# Fecha:       10-07-2024
+# Descripción: Este script contiene pruebas unitarias para la función `importar_a_mysql`.
+#              Utiliza el paquete `testthat` para verificar que la función se comporta como se espera.
+#              Las pruebas incluyen la validación de la estructura del objeto retornado y la correcta manipulación y almacenamiento
+#              de datos en una base de datos MySQL.
+#
+#              Este código es libre para su uso por cualquier persona.
+#====================================================================================================================================
+
 # test_importar_a_mysql.R
 library(testthat)
 
@@ -345,6 +450,8 @@ test_that("Importar a MySQL funciona correctamente", {
 ```
 ## Conclusión
 
-Este proyecto ha sido una valiosa oportunidad para aplicar y consolidar mis conocimientos en programación con R y en el manejo de bases de datos MySQL. A través de este trabajo, he podido automatizar la importación y limpieza de datos, así como realizar análisis de datos de manera eficiente.
+Este proyecto ha sido una valiosa oportunidad para aplicar y consolidar mis conocimientos en programación con R y en el manejo de bases de datos MySQL. A través de este trabajo, he podido automatizar la importación y limpieza de datos, así como realizar análisis de datos de manera eficiente, tema que es bastante recurrente en el trabajo diario.
+
+La incorporación de R como herramienta de analisis en lo laboral ha sido un acierto y una ventaja competitiva que ya estoy diseminando en mi propio equipo de trabajo.
 
 Quisiera agradecer a la Universidad y a mis profesores por su guía y apoyo durante todo el curso, tambien a mis compañeros de clase por la disposición a compartir conocimientos. Este proyecto ha sido un reto enriquecedor y una experiencia de aprendizaje fundamental en mi camino hacia el grado de Magister en Data Science.
