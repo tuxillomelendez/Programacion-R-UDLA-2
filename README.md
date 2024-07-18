@@ -1,6 +1,8 @@
 ![Logo UDLA](https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo-udla.jpg)
 # INFORME CATEDRA NUMERO 2 PROGRAMACION EN R
 
+[REVISION DEL ARCHIVO RMARKDOWN EN FORMATO HTML -->]([URL_del_enlace](https://tuxillomelendez.github.io/Programacion-R-UDLA-2/))
+
 ## Proyecto de Importación de Datos a MySQL usando R
 
 Este proyecto tiene como objetivo automatizar el proceso de importación, limpieza y procesamiento de datos desde un archivo CSV a una base de datos MySQL utilizando R. El proyecto fue desarrollado como parte de la cátedra final del curso Programación en R, conducente al grado de Magister en Data Science.
