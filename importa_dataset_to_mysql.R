@@ -43,7 +43,7 @@ con <- dbConnect(RMySQL::MySQL(),
 # - metodo_na: Método para manejar los NA ("eliminar" o "media", por defecto "eliminar").
 # - encoding: Codificación del archivo de datos (por defecto "UTF-8").
 result <- importar_a_mysql(file_path = "Most Streamed Spotify Songs 2024.csv",
-                           table_name = "spotify",
+                           table_name = "spotify_5",
                            db_con = con,
                            metodo_na = "media",
                            encoding = "UTF-8")

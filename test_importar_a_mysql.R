@@ -6,6 +6,8 @@
 #              Utiliza el paquete `testthat` para verificar que la función se comporta como se espera.
 #              Las pruebas incluyen la validación de la estructura del objeto retornado y la correcta manipulación y almacenamiento
 #              de datos en una base de datos MySQL.
+# Librería:    testthat, que proporciona un marco para realizar pruebas unitarias y asegurar que las funciones se comporten
+#              como se espera.
 #
 #              Este código es libre para su uso por cualquier persona.
 #====================================================================================================================================
