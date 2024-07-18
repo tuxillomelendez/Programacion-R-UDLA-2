@@ -1,7 +1,7 @@
 ![Logo UDLA](https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo-udla.jpg)
 # INFORME CATEDRA NUMERO 2 PROGRAMACION EN R
 
-REVISION DEL ARCHIVO RMARKDOWN EN FORMATO HTML --> [Informe en Rmarkdown](https://tuxillomelendez.github.io/Programacion-R-UDLA-2/)
+*Revisión del archivo RMarkdown en el siguiente* [enlace](https://tuxillomelendez.github.io/Programacion-R-UDLA-2/)
 
 
 ## Proyecto de Importación de Datos a MySQL usando R
